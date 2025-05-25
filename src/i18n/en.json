@@ -47,5 +47,11 @@
   "sold_price": "Sold price",
   "price": "Price",
   "description": "Description",
-  "name": "Name"
+  "name": "Name",
+  "checkout_error": "Please enter your name, email and add at least one item to your cart.",
+  "order_success": "Order received, thank you!",
+  "full_name": "Full name",
+  "shipping_address": "Shipping address",
+  "notes": "Notes (optional)",
+  "place_order": "Place order"
 }

@@ -22,15 +22,22 @@ export default function PlaqueForm() {
   const handleSubmit = () => {
     if (!text.trim()) return alert('Veuillez entrer un texte à graver');
 
-  const newPlaque: CartItem = {
+ const newPlaque: CartItem = {
     id: uuidv4(),
     text,
     material,
     format,
     fixOption,
+    price: "100",
     quantity: 1,
+    image: "https://picsum.photos/1000/1000?21",
+    name: "Medaillon pour le p'tit Rex",
+    sold_price: "90",
+    stock: 6,
+    description: "Funny description because j'en ai marre zebi",
+    size: "small",
+    tags: ["medal","animal"],
   };
-
     addToCart(newPlaque);
     alert('Plaque ajoutée au panier');
     setText('');

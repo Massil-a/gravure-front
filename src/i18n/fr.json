@@ -47,5 +47,11 @@
   "sold_price": "Prix soldé",
   "price": "Prix",
   "description": "Description",
-  "name": "Nom"
+  "name": "Nom",
+  "checkout_error": "Veuillez saisir votre nom, votre email et ajouter au moins un article au panier.",
+  "order_success": "Commande reçue, merci !",
+  "full_name": "Nom complet",
+  "shipping_address": "Adresse de livraison",
+  "notes": "Notes (optionnel)",
+  "place_order": "Valider la commande"
 }

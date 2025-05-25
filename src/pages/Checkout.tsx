@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { getCart, clearCart } from '../lib/cart';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import { t } from '../i18n';
 
 export default function Checkout() {
   const [name, setName] = useState('');
@@ -8,84 +9,134 @@ export default function Checkout() {
   const [address, setAddress] = useState('');
   const [notes, setNotes] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
-  const cart = getCart();
+  const { cart, clearCart } = useCart();
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     if (!name.trim() || !email.trim() || cart.length === 0) {
-      setError('Veuillez remplir votre nom, email et ajouter au moins une plaque au panier.');
+      setError(t('checkout_error'));
       return;
     }
 
-    // Ici, on ferait un fetch POST vers l'API backend, ex :
+    // Ici on enverrait la commande à l'API
     /*
     fetch('/api/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, address, notes, plaques: cart }),
+      body: JSON.stringify({ name, email, address, notes, cart }),
     })
     */
 
-    // Simuler la commande validée
-    alert('Commande reçue, merci !');
+    alert(t('order_success'));
     clearCart();
     navigate('/');
   };
 
   if (cart.length === 0) {
-    return <p style={{ textAlign: 'center', marginTop: '2rem' }}>Votre panier est vide.</p>;
+    return (
+      <p style={{ textAlign: 'center', marginTop: '2rem', fontFamily: "'Inter', sans-serif" }}>
+        {t('cart_empty')}
+      </p>
+    );
   }
 
   return (
-    <div className="container" style={{ maxWidth: 500, margin: '0 auto', padding: '2rem 1rem' }}>
-      <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.8rem', marginBottom: '1rem' }}>Votre commande</h2>
+    <div style={{
+      maxWidth: 600,
+      margin: '2rem auto',
+      padding: '2rem',
+      fontFamily: "'Inter', sans-serif",
+      color: '#111'
+    }}>
+      <h2 style={{
+        fontFamily: "'Playfair Display', serif",
+        fontSize: '2rem',
+        marginBottom: '1rem'
+      }}>
+        {t('checkout')}
+      </h2>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
 
-      <label>
-        Nom complet*:
+      <label style={{ display: 'block', marginBottom: '1rem' }}>
+        {t('full_name')}*:
         <input
           type="text"
           value={name}
           onChange={e => setName(e.target.value)}
-          style={{ width: '100%', padding: 8, marginBottom: 12 }}
+          style={{
+            width: '100%',
+            padding: '0.5rem',
+            marginTop: '0.5rem',
+            border: '1px solid #ccc',
+            borderRadius: 4
+          }}
         />
       </label>
 
-      <label>
+      <label style={{ display: 'block', marginBottom: '1rem' }}>
         Email*:
         <input
           type="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
-          style={{ width: '100%', padding: 8, marginBottom: 12 }}
+          style={{
+            width: '100%',
+            padding: '0.5rem',
+            marginTop: '0.5rem',
+            border: '1px solid #ccc',
+            borderRadius: 4
+          }}
         />
       </label>
 
-      <label>
-        Adresse de livraison:
+      <label style={{ display: 'block', marginBottom: '1rem' }}>
+        {t('shipping_address')}:
         <textarea
           value={address}
           onChange={e => setAddress(e.target.value)}
-          style={{ width: '100%', padding: 8, marginBottom: 12 }}
+          style={{
+            width: '100%',
+            padding: '0.5rem',
+            marginTop: '0.5rem',
+            border: '1px solid #ccc',
+            borderRadius: 4
+          }}
         />
       </label>
 
-      <label>
-        Notes (optionnel):
+      <label style={{ display: 'block', marginBottom: '1rem' }}>
+        {t('notes')}:
         <textarea
           value={notes}
           onChange={e => setNotes(e.target.value)}
-          style={{ width: '100%', padding: 8, marginBottom: 12 }}
+          style={{
+            width: '100%',
+            padding: '0.5rem',
+            marginTop: '0.5rem',
+            border: '1px solid #ccc',
+            borderRadius: 4
+          }}
         />
       </label>
 
       <button
         onClick={handleSubmit}
-        style={{ width: '100%', padding: 12, backgroundColor: '#000', color: '#fff', fontWeight: 'bold', borderRadius: 4 }}
+        style={{
+          width: '100%',
+          padding: '1rem',
+          backgroundColor: '#111',
+          color: '#fff',
+          fontWeight: 'bold',
+          fontSize: '1.1rem',
+          border: 'none',
+          borderRadius: 4,
+          cursor: 'pointer',
+          marginTop: '1rem'
+        }}
       >
-        Valider la commande
+        {t('place_order')}
       </button>
     </div>
   );
