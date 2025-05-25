@@ -1,7 +1,15 @@
 import { useState } from 'react';
-import { addToCart } from '../lib/cart';
-import type { Plaque } from '../lib/cart'
+import { useCart, type CartItem } from '../context/CartContext';
 import { v4 as uuidv4 } from 'uuid';
+
+export type Plaque = {
+  id: string;
+  text: string;
+  material: string;
+  format: string;
+  fixOption: string;
+  quantity?: number;
+};
 
 export default function PlaqueForm() {
   const [text, setText] = useState('');
@@ -9,16 +17,19 @@ export default function PlaqueForm() {
   const [format, setFormat] = useState('petite');
   const [fixOption, setFixOption] = useState('adhésif');
 
+  const { addToCart } = useCart(); // ✅ Récupérer la fonction depuis le contexte
+
   const handleSubmit = () => {
     if (!text.trim()) return alert('Veuillez entrer un texte à graver');
 
-    const newPlaque: Plaque = {
-      id: uuidv4(),
-      text,
-      material,
-      format,
-      fixOption,
-    };
+  const newPlaque: CartItem = {
+    id: uuidv4(),
+    text,
+    material,
+    format,
+    fixOption,
+    quantity: 1,
+  };
 
     addToCart(newPlaque);
     alert('Plaque ajoutée au panier');
