@@ -38,7 +38,7 @@ export default function Home() {
         {t('hero_subtitle')}
       </p>
       <button
-        onClick={() => navigate('/choose')}
+        onClick={() => navigate('/shop')}
         style={{
           backgroundColor: '#222',
           color: 'white',
